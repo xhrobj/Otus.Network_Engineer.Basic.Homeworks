@@ -11,6 +11,10 @@
 enable
 configure terminal
 
+! При наборе неверных команд, не пытаться их интерпретировать
+! как имя хоста с последующим походом в DNS
+no ip domain-lookup
+
 ! Имя хоста и баннер
 hostname S1
 banner motd = 
