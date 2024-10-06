@@ -27,7 +27,8 @@ banner motd =
       \/        \/     \/     \/     
 =
 
-banner login " Hello, Switch "
+! banner login в CPT не работает, но работает на "железном" 2960C
+banner login % Hello, Switch %
 
 ```
 
@@ -43,6 +44,51 @@ logging synchronous
 password cisco
 login
 exit
+
+```
+
+Скрываем пароли (т.к. у `line con` и `line vty` (см. ниже) нет подкоманды `secret`, только `password`)
+
+```
+
+! Включение службы шифрования паролей в текущей конфигурации
+service password-encryption
+
+! Отключение службы шифрования паролей
+! no service password-encryption
+
+```
+
+Пароль на доступ к привилегированному режиму EXEC
+
+```
+
+! Пароль на enable
+! enable password class
+! или
+enable secret class
+
+```
+
+***Настройка SVI для управления коммутатором (управляющий VLAN)***
+
+SVI (Switched Virtual Interface) — это виртуальный интерфейс на коммутаторе, который связывается с конкретным VLAN. SVI используется для предоставления IP-сервисов для VLAN и позволяет выполнять маршрутизацию между различными VLAN на уровне коммутатора
+
+```
+
+! Лучше сделать отдельный управляющий VLAN
+!S1# configure terminal
+!S1(config)# vlan 10
+!S1(config-vlan)# name ManagementVLAN
+!S1(config-vlan)# exit
+
+! SVI для управления коммутатором (управляющий VLAN)
+interface vlan 1
+ip address 192.168.1.11 255.255.255.0
+no shutdown
+exit
+
+end
 
 ```
 
@@ -65,44 +111,9 @@ exit
 
 ```
 
-Пароль на доступ к привилегированному режиму EXEC
+Теперь коммутатор доступен по ip-адресу 192.168.1.11 через Telnet. На удалённой машине, которая находится в той же подсети, можно использовать клиент Telnet: `telnet 192.168.1.11`
 
-```
-
-! Пароль на enable
-enable password class
-! или
-enable secret class
-
-```
-
-Скрываем пароли
-
-```
-
-! Скрываем пароли
-service password-encryption
-
-! Чтобы отключить шифрование паролей
-! no service password-encryption
-
-```
-
-другое ...
-
-```
-
-! ip-адрес для коммутатора
-interface vlan 1
-ip address 192.168.1.11 255.255.255.0
-no shutdown
-exit
-
-end
-
-```
-
-Копируем текущую конфигурацию в NVRAM
+***Копируем текущую конфигурацию в NVRAM***
 
 ```
 
