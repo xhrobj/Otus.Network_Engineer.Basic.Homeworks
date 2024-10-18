@@ -8,6 +8,8 @@
 
 hostname R1
 
+ipv6 unicast-routing
+
 interface g0/0
 ip address 192.168.1.1 255.255.255.248
 ipv6 address fe80::1 link-local
