@@ -27,20 +27,7 @@ banner motd =
       \/        \/     \/     \/     
 =
 
-! или
-banner motd =
-
-##############################
-#                            #
-#   WARNING!                 #
-#   UNAUTHORIZED PERSONNEL   #
-#   WILL BE SHOT ON SIGHT    #
-#                            #
-##############################
-
-=
-
-! banner login в CPT не работает, но работает на "железном" 2960C
+! banner login в CPT не работает, но работает на "железном" Cisco Catalist 2960C
 banner login % Hello, Switch %
 
 ```
