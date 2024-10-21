@@ -161,7 +161,7 @@ ip ssh version 2
 
 ! Создаем пару имя_пользователя/пароль (admin/god),
 ! которая может использоваться как локальная база данных для аутентификации
-username admin password god
+username admin [secret | password] god
 
 ```
 
@@ -176,9 +176,8 @@ login local
 ! ... и разрешить подключение по ssh
 transport input ssh
 
-! эта команда разрешает и telnet и ssh для vty
-! (но, похоже, не все девайсы поддерживают оба варианта одновременно)
-! transport input telnet ssh
+! этот вариант команды разрешает и telnet и ssh для vty (дефолтный вариант)
+! transport input all
 
 ```
 
